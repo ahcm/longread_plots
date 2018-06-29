@@ -182,6 +182,15 @@ def plot_qualities(ax,df):
   ax.hist(df.mean_quality, 160, range=(0,40)) #, s=point_size) #, range=(0,20000))
   #df.hist(ax=ax, column=['mean_quality'], by=['seq_length'])
 
+def plot_quality_seqlength(ax,df):
+  #hb = df.plot.hexbin(ax=ax, x="mean_quality", y="seq_length", C="seq_length", reduce_C_function=np.sum, cmap="Blues")
+  #cb = ax.fig.colorbar(hb, ax=ax)
+  #cb.set_label('sum')
+  ax.hist2d(x=df.mean_quality, y=np.log10(df.seq_length),bins=[80,80], cmap="Blues")
+  ax.set_xlabel("Mean Quality")
+  ax.set_ylabel("Read Length Log10")
+  #ax.grid(b=False)
+
 
 def plot_nts_by_time(ax, df):
   ax.set_title("Commulative Nucleotides since start time")
@@ -334,6 +343,8 @@ def plot_fastq_info(df):
 
   plot_qualities(axs.pop(), df)
 
+  plot_quality_seqlength(axs.pop(), df)
+
   plot_nts_by_time(axs.pop(), df)
 
   #plot_nts_by_channel(axs.pop(), df)
@@ -343,7 +354,7 @@ def plot_fastq_info(df):
 
   plot_kmer_start(axs.pop(), df)
 
-  plot_kmer_end(axs.pop(), df)
+#  plot_kmer_end(axs.pop(), df)
 
   plt.subplots_adjust(left=0.2, wspace=1.0, top=2.8)
   basename = os.path.basename(filename)
