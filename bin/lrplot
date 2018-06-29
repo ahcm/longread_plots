@@ -14,7 +14,6 @@ matplotlib.use('Agg')
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 import datetime
-import pylab
 import seaborn as sns
 import pandas as pd
 import numpy as np
