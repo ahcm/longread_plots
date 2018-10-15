@@ -117,13 +117,15 @@ def get_fastq_info(filename):
 def plot_nt_content(ax, df):
   ax.set_title("Nucleotide Content")
   ax.set_xlabel("NT")
-  ax.set_ylabel("Count")
+  ax.set_ylabel("Percent")
   nt = {}
   nt['A'] = np.sum(df.nt_A)
   nt['T'] = np.sum(df.nt_T)
   nt['G'] = np.sum(df.nt_G)
   nt['C'] = np.sum(df.nt_C)
   nt['U'] = np.sum(df.nt_U)
+  s = np.sum((nt['A'], nt['T'], nt['G'], nt['C'], nt['U']))
+  for k,v in nt.items(): nt[k] = (v / s) * 100
   if nt['U'] > 0:
     sns.barplot(['G', 'C', 'A', 'U'], [nt['G'], nt['C'], nt['A'], nt['U']], ax=ax)
   else:
