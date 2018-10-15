@@ -19,7 +19,8 @@ import pandas as pd
 import numpy as np
 import collections
 
-sns.set(style="whitegrid")
+#sns.set(style="whitegrid")
+plt.style.use("seaborn")
 
 matplotlib.rcParams['axes.titlesize']=16
 matplotlib.rcParams['axes.labelsize']=16
