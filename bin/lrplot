@@ -115,7 +115,7 @@ def get_fastq_info(filename):
 ## Plots
 
 def plot_nt_content(ax, df):
-  ax.set_title("Nucleotide Content")
+  ax.set_title("Nucleotide Content", loc="left")
   ax.set_xlabel("NT")
   ax.set_ylabel("Percent")
   nt = {}
@@ -133,7 +133,7 @@ def plot_nt_content(ax, df):
 
 
 def plot_length_binned(ax, df, num_bins = 1000):
-  ax.set_title("Histogram of sequence lengths 1000 bins")
+  ax.set_title("Histogram of sequence lengths 1000 bins", loc="left")
   ax.set_xlabel("Lengths")
   ax.set_ylabel("Count")
   ax.hist(df.seq_length, num_bins)
@@ -143,7 +143,7 @@ def plot_length_binned(ax, df, num_bins = 1000):
 def plot_length_percentile(ax, df, percentile=90):
   cutoff = int(round(np.percentile(df.seq_length, percentile)))
   num_bins = int(round(cutoff))
-  ax.set_title("Histogram of Sequence Lengths from 0 to " + str(cutoff) + " (" + str(percentile) + "%ile) in " + str(num_bins) + " bins")
+  ax.set_title("Histogram of Sequence Lengths from 0 to " + str(cutoff) + " (" + str(percentile) + "%ile) in " + str(num_bins) + " bins", loc="left")
   ax.set_xlabel("Length")
   ax.set_ylabel("Count")
   ax.hist(df.seq_length, num_bins, range=(0,cutoff))
@@ -170,7 +170,7 @@ def plot_nucleotides_per_length(ax, df):
 
   print("N50\t" + str(n50))
 
-  ax.set_title("Nucleotides per Sequence Length in 100nt bins (N50:" + str(n50) + ")")
+  ax.set_title("Nucleotides per Sequence Length in 100nt bins (N50:" + str(n50) + ")", loc="left")
   ax.set_xlabel("Length")
   ax.set_ylabel("GBases")
   lens = np.asfarray(list(blens.values())) 
@@ -179,7 +179,7 @@ def plot_nucleotides_per_length(ax, df):
 
 
 def plot_qualities(ax,df):
-  ax.set_title("Mean Qualities")
+  ax.set_title("Mean Qualities", loc="left")
   ax.hist(df.mean_quality, 160, range=(0,40)) #, s=point_size) #, range=(0,20000))
   #df.hist(ax=ax, column=['mean_quality'], by=['seq_length'])
 
@@ -194,7 +194,7 @@ def plot_quality_seqlength(ax,df):
 
 
 def plot_nts_by_time(ax, df):
-  ax.set_title("Commulative Nucleotides since start time")
+  ax.set_title("Commulative Nucleotides since start time", loc="left")
   deltas = df.start_times - df.start_times.min()
   ax.plot(deltas / pd.Timedelta(hours=1), df.seq_length.cumsum() / float(1000 ** 3) , linewidth=6)
   ax.set_xlabel("Time (hours)")
@@ -204,7 +204,7 @@ def plot_nts_by_time(ax, df):
 def plot_nts_by_channel(ax, df):
   title = "Nucleotides by channel"
   if(not any(df.channels)): title += " (not available)"
-  ax.set_title(title)
+  ax.set_title(title, loc="left")
   ax.scatter(df.channels, df.seq_length)
   ax.set_xlabel("Channel")
   ax.set_ylabel("Number of NTs")
@@ -302,7 +302,7 @@ def get_coords(channel,flowcellsize):
 
 def plot_nts_by_layout(ax, df):
   title = "Channel activity"
-  ax.set_title(title)
+  ax.set_title(title, loc="left")
   flowcellsize = 512
   if df.channels.max() > 512:
     flowcellsize = 3000
@@ -314,14 +314,14 @@ def plot_nts_by_layout(ax, df):
 
 def plot_kmer_start(ax, df):
   df.kmers_start.value_counts().head(n=40).plot.bar(ax=ax)
-  ax.set_title("Start of Sequence k-mer Content (k=4) top 40")
+  ax.set_title("Start of Sequence k-mer Content (k=4) top 40", loc="left")
   ax.set_xlabel("K-mer")
   ax.set_ylabel("Count")
 
 
 def plot_kmer_end(ax, df):
   df.kmers_end.value_counts().head(n=40).plot.bar(ax=ax)
-  ax.set_title("End of Sequence k-mer Content (k=4) top 40")
+  ax.set_title("End of Sequence k-mer Content (k=4) top 40", loc="left")
   ax.set_xlabel("K-mer")
   ax.set_ylabel("Count")
 
