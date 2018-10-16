@@ -19,13 +19,13 @@ import pandas as pd
 import numpy as np
 import collections
 
-#sns.set(style="whitegrid")
-plt.style.use("seaborn")
+#sns.set(style="paper")
+#plt.style.use("seaborn-paper")
 
-matplotlib.rcParams['axes.titlesize']=16
-matplotlib.rcParams['axes.labelsize']=16
-matplotlib.rcParams['xtick.labelsize']=16
-matplotlib.rcParams['ytick.labelsize']=16
+matplotlib.rcParams['axes.titlesize']=13
+matplotlib.rcParams['axes.labelsize']=12
+matplotlib.rcParams['xtick.labelsize']=11
+matplotlib.rcParams['ytick.labelsize']=11
 matplotlib.rcParams['figure.titlesize']=20
 
 
@@ -112,6 +112,13 @@ def get_fastq_info(filename):
                       "start_times": start_times})
   return df.sort_values(by=['start_times'])
 
+def xlabel_pos_right(ax):
+  label = ax.xaxis.get_label()
+  x_lab_pos, y_lab_pos = label.get_position()
+  label.set_position([1.0, y_lab_pos])
+  label.set_horizontalalignment('right')
+  ax.xaxis.set_label(label)
+
 
 ## Plots
 
@@ -136,8 +143,10 @@ def plot_nt_content(ax, df):
 def plot_length_binned(ax, df, num_bins = 1000):
   ax.set_title("Histogram of sequence lengths 1000 bins", loc="left")
   ax.set_xlabel("Lengths")
-  ax.set_ylabel("Count")
+  ax.set_ylabel("Count (Log)")
   ax.hist(df.seq_length, num_bins)
+  ax.set_yscale('log', nonposy='clip')
+  xlabel_pos_right(ax)
   #sns.distplot(x, ax=ax, bins=num_bins, kde=False)
 
 
@@ -146,7 +155,9 @@ def plot_length_percentile(ax, df, percentile=90):
   num_bins = int(round(cutoff))
   ax.set_title("Histogram of Sequence Lengths from 0 to " + str(cutoff) + " (" + str(percentile) + "%ile) in " + str(num_bins) + " bins", loc="left")
   ax.set_xlabel("Length")
-  ax.set_ylabel("Count")
+  ax.set_ylabel("Count (Log)")
+  ax.set_yscale('log', nonposy='clip')
+  xlabel_pos_right(ax)
   ax.hist(df.seq_length, num_bins, range=(0,cutoff))
 
 
@@ -177,20 +188,25 @@ def plot_nucleotides_per_length(ax, df):
   lens = np.asfarray(list(blens.values())) 
   ax.bar(list(blens.keys()), lens / float(1000 ** 3), width=100) #, s=point_size) #, range=(0,20000))
   ax.axvline(x=n50, color="red")
+  xlabel_pos_right(ax)
 
 
 def plot_qualities(ax,df):
-  ax.set_title("Mean Qualities", loc="left")
+  ax.set_title("Histogram of Mean Qualities", loc="left")
   ax.hist(df.mean_quality, 160, range=(0,40)) #, s=point_size) #, range=(0,20000))
+  ax.set_xlabel("Quality")
+  xlabel_pos_right(ax)
   #df.hist(ax=ax, column=['mean_quality'], by=['seq_length'])
 
 def plot_quality_seqlength(ax,df):
   #hb = df.plot.hexbin(ax=ax, x="mean_quality", y="seq_length", C="seq_length", reduce_C_function=np.sum, cmap="Blues")
   #cb = ax.fig.colorbar(hb, ax=ax)
   #cb.set_label('sum')
+  ax.set_title("Read Length vs Quality")
   ax.hist2d(x=df.mean_quality, y=np.log10(df.seq_length),bins=[80,80], cmap="Blues")
   ax.set_xlabel("Mean Quality")
   ax.set_ylabel("Read Length Log10")
+  xlabel_pos_right(ax)
   #ax.grid(b=False)
 
 
@@ -200,6 +216,7 @@ def plot_nts_by_time(ax, df):
   ax.plot(deltas / pd.Timedelta(hours=1), df.seq_length.cumsum() / float(1000 ** 3) , linewidth=6)
   ax.set_xlabel("Time (hours)")
   ax.set_ylabel("GBases")
+  xlabel_pos_right(ax)
 
 
 def plot_nts_by_channel(ax, df):
@@ -209,6 +226,7 @@ def plot_nts_by_channel(ax, df):
   ax.scatter(df.channels, df.seq_length)
   ax.set_xlabel("Channel")
   ax.set_ylabel("Number of NTs")
+  xlabel_pos_right(ax)
 
 # adapted from https://github.com/mattloose/flowcellvis
 def minION_flowcell_layout(channel):
@@ -311,6 +329,7 @@ def plot_nts_by_layout(ax, df):
   ax.scatter([c[0] for c in coords], [c[1] for c in coords], alpha=0.1, s=3)
   ax.set_xticks([])
   ax.set_yticks([])
+  xlabel_pos_right(ax)
  
 
 def plot_kmer_start(ax, df):
@@ -318,6 +337,7 @@ def plot_kmer_start(ax, df):
   ax.set_title("Start of Sequence k-mer Content (k=4) top 40", loc="left")
   ax.set_xlabel("K-mer")
   ax.set_ylabel("Count")
+  xlabel_pos_right(ax)
 
 
 def plot_kmer_end(ax, df):
@@ -325,11 +345,12 @@ def plot_kmer_end(ax, df):
   ax.set_title("End of Sequence k-mer Content (k=4) top 40", loc="left")
   ax.set_xlabel("K-mer")
   ax.set_ylabel("Count")
+  xlabel_pos_right(ax)
 
 
 # Assemble Plots
 def plot_fastq_info(df):
-  (fig, axsa) = plt.subplots(ncols=2,nrows=5)
+  (fig, axsa) = plt.subplots(ncols=2,nrows=4)
   axs = axsa.flatten().tolist()
   axs.reverse()
   point_size = 8
@@ -337,15 +358,15 @@ def plot_fastq_info(df):
 
   plot_length_binned(axs.pop(), df, 1000)
 
-  plot_length_percentile(axs.pop(), df, 90)
-
-  plot_length_percentile(axs.pop(), df, 70)
+  plot_qualities(axs.pop(), df)
 
   plot_nucleotides_per_length(axs.pop(), df)
 
-  plot_qualities(axs.pop(), df)
-
   plot_quality_seqlength(axs.pop(), df)
+
+#  plot_length_percentile(axs.pop(), df, 90)
+
+#  plot_length_percentile(axs.pop(), df, 70)
 
   plot_nts_by_time(axs.pop(), df)
 
