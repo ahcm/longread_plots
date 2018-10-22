@@ -1,11 +1,21 @@
 # longread_plots
 A collection of plots for long read sequencing FastQ files from devices like Oxford Nanopore's MinION and PromethION.
 # Dependencies
+```bash
+pip install --user --upgrade pandas seaborn
+```
 
-pip install pandas seaborn
+Note that matplot lib >= 3.0.0 is would be nice to have.
+
+# Installation
+```bash
+python3 setup.py install --user
+```
 
 # Usage
+```bash
 python3 bin/lrplots example.fastq
+```
 
 # Output
 
