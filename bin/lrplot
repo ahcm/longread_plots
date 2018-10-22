@@ -194,20 +194,20 @@ def plot_nucleotides_per_length(ax, df):
 def plot_qualities(ax,df):
   ax.set_title("Histogram of Mean Qualities", loc="left")
   ax.hist(df.mean_quality, 160, range=(0,40)) #, s=point_size) #, range=(0,20000))
+  ax.set_xlim(left=0, right=40)
   ax.set_xlabel("Quality")
   xlabel_pos_right(ax)
   #df.hist(ax=ax, column=['mean_quality'], by=['seq_length'])
 
 def plot_quality_seqlength(ax,df):
-  #hb = df.plot.hexbin(ax=ax, x="mean_quality", y="seq_length", C="seq_length", reduce_C_function=np.sum, cmap="Blues")
-  #cb = ax.fig.colorbar(hb, ax=ax)
-  #cb.set_label('sum')
   ax.set_title("Read Length vs Quality")
-  ax.hist2d(x=df.mean_quality, y=np.log10(df.seq_length),bins=[80,80], cmap="Blues")
+  max_len = np.max(df.seq_length)
+  ax.hist2d(x=df.mean_quality, y=df.seq_length,bins=[320,40000], cmap="Blues", norm=matplotlib.colors.LogNorm())
+  ax.set_xlim(left=0, right=40)
   ax.set_xlabel("Mean Quality")
   ax.set_ylabel("Read Length Log10")
   xlabel_pos_right(ax)
-  #ax.grid(b=False)
+  ax.set_yscale('log', nonposy='clip')
 
 
 def plot_nts_by_time(ax, df):
