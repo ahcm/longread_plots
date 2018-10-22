@@ -6,11 +6,20 @@ pip install --user --upgrade pandas seaborn
 ```
 
 Note that matplot lib >= 3.0.0 is would be nice to have.
+Python >= 3.5 is therfore recommended.
 
 # Installation
+
+From PyPi:
+```bash
+pip3 install --user lrplots
+```
+
+From the release tar.gz:
 ```bash
 python3 setup.py install --user
 ```
+
 
 # Usage
 ```bash
