@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from __future__ import print_function
 disclaimer = """
-# Version 0.4.0 2018-10-22
+# Version 0.4.1 2018-10-30
 # This is work in progress.
 # -- Andy Hauser <Andreas.Hauser@LMU.de>
 """
@@ -209,7 +209,7 @@ def plot_quality_seqlength(ax,df):
 
 
 def plot_nts_by_time(ax, df):
-  ax.set_title("Commulative Nucleotides since start time", loc="left")
+  ax.set_title("Cumulative Nucleotides since start time", loc="left")
   deltas = df.start_times - df.start_times.min()
   ax.plot(deltas / pd.Timedelta(hours=1), df.seq_length.cumsum() / float(1000 ** 3) , linewidth=6)
   ax.set_xlabel("Time (hours)")

@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='lrplots',
-    version='0.4.0',
+    version='0.4.1',
     author='Andy Hauser',
     author_email='Andreas.Hauser@LMU.de',
     scripts=['bin/lrplot'],
