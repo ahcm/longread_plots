@@ -213,6 +213,22 @@ def plot_quality_seqlength(ax,df):
   ax.set_yscale('log', nonposy='clip')
 
 
+def plot_time_seqlength(ax,df):
+  ax.set_title("Read Length by Time")
+  max_len = np.max(df.seq_length)
+  deltas = df.start_times - df.start_times.min()
+  hours = deltas / pd.Timedelta(hours=1)
+  xbins = np.arange(1,np.max(hours),1)
+  ybins = np.arange(1,6,0.01) ** 10
+  plot_hist2d_helper(ax, xbins, ybins, hours, df.seq_length)
+  ax.set_xlabel("Time")
+  ax.set_ylabel("Read Length Log10")
+  xlabel_pos_right(ax)
+  ax.set_yscale('log', nonposy='clip')
+  ax.set_xlim(left=0, right=np.max(hours))
+  xlabel_pos_right(ax)
+
+
 def plot_nts_by_time(ax, df):
   ax.set_title("Cumulative Nucleotides since start time", loc="left")
   deltas = df.start_times - df.start_times.min()
@@ -374,11 +390,13 @@ def plot_fastq_info(df):
   plot_nts_by_time(axs.pop(), df)
 
   #plot_nts_by_channel(axs.pop(), df)
-  plot_nts_by_layout(axs.pop(), df)
-
   plot_nt_content(axs.pop(), df)
 
-  plot_kmer_start(axs.pop(), df)
+  plot_time_seqlength(axs.pop(),df)
+
+  plot_nts_by_layout(axs.pop(), df)
+
+#  plot_kmer_start(axs.pop(), df)
 
 #  plot_kmer_end(axs.pop(), df)
 
