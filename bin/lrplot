@@ -197,6 +197,11 @@ def plot_qualities(ax,df):
   xlabel_pos_right(ax)
   #df.hist(ax=ax, column=['mean_quality'], by=['seq_length'])
 
+# Matplotlib hist2d isn't so nice with log scales, so use pcolormesh directly
+def plot_hist2d_helper(ax,xbins,ybins,x,y):
+  counts, _, _ = np.histogram2d(x, y, bins=(xbins, ybins))
+  ax.pcolormesh(xbins, ybins, counts.T, cmap = "Blues", norm=matplotlib.colors.LogNorm())
+
 def plot_quality_seqlength(ax,df):
   ax.set_title("Read Length vs Quality")
   max_len = np.max(df.seq_length)
