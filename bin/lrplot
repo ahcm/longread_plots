@@ -232,9 +232,11 @@ def plot_time_seqlength(ax,df):
 def plot_nts_by_time(ax, df):
   ax.set_title("Cumulative Nucleotides since start time", loc="left")
   deltas = df.start_times - df.start_times.min()
-  ax.plot(deltas / pd.Timedelta(hours=1), df.seq_length.cumsum() / float(1000 ** 3) , linewidth=6)
+  hours = deltas / pd.Timedelta(hours=1)
+  ax.plot(hours, df.seq_length.cumsum() / float(1000 ** 3) , linewidth=6)
   ax.set_xlabel("Time (hours)")
   ax.set_ylabel("GBases")
+  ax.set_xlim(left=0, right=np.max(hours))
   xlabel_pos_right(ax)
 
 
