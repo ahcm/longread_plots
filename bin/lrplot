@@ -203,9 +203,11 @@ def plot_hist2d_helper(ax,xbins,ybins,x,y):
   ax.pcolormesh(xbins, ybins, counts.T, cmap = "Blues", norm=matplotlib.colors.LogNorm())
 
 def plot_quality_seqlength(ax,df):
-  ax.set_title("Read Length vs Quality")
+  ax.set_title("Read Length vs Quality", loc="left")
   max_len = np.max(df.seq_length)
-  ax.hist2d(x=df.mean_quality, y=df.seq_length,bins=[320,40000], cmap="Blues", norm=matplotlib.colors.LogNorm())
+  xbins = np.arange(0,40,0.1)
+  ybins = np.arange(1,np.log(max_len),0.01) ** 10
+  plot_hist2d_helper(ax, xbins, ybins, df.mean_quality, df.seq_length)
   ax.set_xlim(left=0, right=40)
   ax.set_xlabel("Mean Quality")
   ax.set_ylabel("Read Length Log10")
@@ -214,11 +216,11 @@ def plot_quality_seqlength(ax,df):
 
 
 def plot_time_seqlength(ax,df):
-  ax.set_title("Read Length by Time")
+  ax.set_title("Read Length by Time", loc="left")
   max_len = np.max(df.seq_length)
   deltas = df.start_times - df.start_times.min()
   hours = deltas / pd.Timedelta(hours=1)
-  xbins = np.arange(1,np.max(hours),1)
+  xbins = np.arange(0,np.max(hours),1)
   ybins = np.arange(1,6,0.01) ** 10
   plot_hist2d_helper(ax, xbins, ybins, hours, df.seq_length)
   ax.set_xlabel("Time")
