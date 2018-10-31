@@ -379,7 +379,7 @@ def plot_fastq_info(df):
 
   plt.subplots_adjust(left=0.2, wspace=1.0, top=2.8)
   basename = os.path.basename(filename)
-  plt.suptitle(basename + " (" + str(round(df.seq_length.sum() / (1000.0**3), 2))  + "GBases)")
+  plt.suptitle(basename + " (" + str(len(df)) + " reads, " + str(round(df.seq_length.sum() / (1000.0**3), 2))  + "GBases)")
   fig.set_size_inches(21,12)
   fig.tight_layout()
   plt.subplots_adjust(top=0.9)
