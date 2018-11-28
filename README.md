@@ -36,9 +36,9 @@ or
 ```bash
 find /usr/local -name lrplot
 ```
-Then either add the containind directory to your PATH or just use the full path.
+Then either add the containing directory to your PATH or just use the full path.
 
-You can also call it like a skript with python3 (or whatever your python3 is called):
+You can also call it like a script with python3 (or whatever your python3 is called):
 ```bash
 python3 bin/lrplots example.fastq
 ```
