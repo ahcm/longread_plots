@@ -22,6 +22,23 @@ python3 setup.py install --user
 
 
 # Usage
+With the pip3 installation it should be in your PATH and you should be able to just call:
+```bash
+lrplots example.fastq
+```
+
+If the command can't be found, pip3 installed it in a path that is not in your PATH variable.
+You can then find it with:
+```bash
+find ~ -name lrplot
+```
+or
+```bash
+find /usr/local -name lrplot
+```
+Then either add the containind directory to your PATH or just use the full path.
+
+You can also call it like a skript with python3 (or whatever your python3 is called):
 ```bash
 python3 bin/lrplots example.fastq
 ```
