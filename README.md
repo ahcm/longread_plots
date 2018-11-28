@@ -5,8 +5,8 @@ A collection of plots for long read sequencing FastQ files from devices like Oxf
 pip install --user --upgrade pandas seaborn
 ```
 
-Note that matplot lib >= 3.0.0 is would be nice to have.
-Python >= 3.5 is therfore recommended.
+Note that matplot lib >= 3.0.0 is needed.
+Python >= 3.5 is therfore recommended, otherwise plots might be corrupted.
 
 # Installation
 
