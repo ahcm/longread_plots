@@ -94,7 +94,8 @@ def get_fastq_info(filename):
 
     if "start_time" in info:
       start_time = info["start_time"]
-      t = pd.to_datetime(start_time, infer_datetime_format=False).floor('S')
+      # cutting off the string is way faster than .floor('S')
+      t = pd.to_datetime(start_time[0:-4], format='%Y-%m-%dT%H:%M', infer_datetime_format=False)
       start_times.append(t)
 
   df = pd.DataFrame({ "seq_length": seq_lengths,
