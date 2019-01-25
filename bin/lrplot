@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from __future__ import print_function
 disclaimer = """
-# Version 0.5.0 2018-10-31
+# Version 0.5.2 2019-01-25
 # This is work in progress.
 # -- Andy Hauser <Andreas.Hauser@LMU.de>
 """
@@ -17,6 +17,7 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 import collections
+from pyfastq_reader import fastq_reader
 
 plt.style.use("seaborn-colorblind")
 
@@ -25,33 +26,6 @@ matplotlib.rcParams['axes.labelsize']=12
 matplotlib.rcParams['xtick.labelsize']=11
 matplotlib.rcParams['ytick.labelsize']=11
 matplotlib.rcParams['figure.titlesize']=20
-
-
-def fastq_reader(filename):
-  i = 0
-  with open(filename, 'r') as infile:
-     name = infile.readline().rstrip()
-     while True:
-       i += 1
-       seq = ""
-       for s in infile:
-         if s[0] == '+':
-           commentp = s.rstrip()
-           break
-         else:
-           seq += s.rstrip()
-       qual = ""
-       for q in infile:
-         if len(qual) > 0 and  q[0] == '@':
-           yield name, seq, qual
-           name = q.rstrip()
-           break
-         else:
-           qual += q.rstrip()
-       else:
-         yield name, seq, qual
-         return
-
 
 
 def get_fastq_info(filename):
