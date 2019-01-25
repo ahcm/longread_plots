@@ -1,18 +1,24 @@
-from distutils.core import setup
+import setuptools
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(
     name='lrplots',
-    version='0.5.0',
+    version='0.5.1',
     author='Andy Hauser',
     author_email='Andreas.Hauser@LMU.de',
-    scripts=['bin/lrplot'],
-    url='https://github.com/ahcm/longread_plots',
     license='LICENSE',
     description='Plot collection for Long Read Sequencing',
-    long_description='Plot collection for Long Read Sequencing like Oxford Nanopores',
-    install_requires=[
-        "matplotlib >= 2.2.0",
-        "pandas >= 0.23.4",
-        "seaborn >= 0.9.0",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url='https://github.com/ahcm/longread_plots',
+    packages=setuptools.find_packages(),
+    scripts=['bin/lrplot'],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
     ],
 )
