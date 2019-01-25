@@ -3,7 +3,7 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-setup(
+setuptools.setup(
     name='lrplots',
     version='0.5.1',
     author='Andy Hauser',
@@ -19,6 +19,5 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-    ],
     ],
 )
