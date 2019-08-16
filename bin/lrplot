@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from __future__ import print_function
 disclaimer = """
-# Version 0.5.2 2019-01-25
+# Version 0.6.6 2019-08-16
 # This is work in progress.
 # -- Andy Hauser <Andreas.Hauser@LMU.de>
 """
