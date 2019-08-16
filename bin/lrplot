@@ -400,10 +400,10 @@ for filename in sys.argv[1:]:
 
   df_filename = basename + ".df.tsv"
   if os.path.isfile(df_filename): # read alreads computed dataframe
-    df = pd.read_csv(df_filename, sep="\t", encoding='utf-8', parse_dates=[11] )
+    df = pd.read_csv(df_filename, sep="\t", encoding='utf-8', parse_dates=[10] )
   else:
     df = get_fastq_info(filename)
-    df.to_csv(df_filename, sep='\t', encoding='utf-8')
+    df.to_csv(df_filename, sep='\t', encoding='utf-8', index=False)
 
   print(df.describe())
   plt = plot_fastq_info(df)
