@@ -345,6 +345,17 @@ def plot_kmer_end(ax, df):
   xlabel_pos_right(ax)
 
 
+# inspired by nanoplot
+def plot_channels_by_time(ax, df):
+  deltas = df["start_times"] - df["start_times"][0]
+  df_resample = df.set_index(deltas).loc[:, "channels"].resample('1T').nunique()
+  df_resample.index = df_resample.index / pd.Timedelta(hours=1)
+  ax = df_resample.plot(marker=".", ax=ax)
+  ax.set_title("Channels with new read in one minute bin'", loc="left")
+  ax.set(xlabel='Time in hours', ylabel='Channels')
+  xlabel_pos_right(ax)
+
+
 # Assemble Plots
 def plot_fastq_info(df):
   (fig, axsa) = plt.subplots(ncols=2,nrows=4)
@@ -373,6 +384,8 @@ def plot_fastq_info(df):
   plot_time_seqlength(axs.pop(),df)
 
   plot_nts_by_layout(axs.pop(), df)
+
+#  plot_channels_by_time(axs.pop(), df)
 
 #  plot_kmer_start(axs.pop(), df)
 
