@@ -107,9 +107,9 @@ def plot_nt_content(ax, df):
   s = np.sum((nt['A'], nt['T'], nt['G'], nt['C'], nt['U']))
   for k,v in nt.items(): nt[k] = (v / s) * 100
   if nt['U'] > 0:
-    sns.barplot(['G', 'C', 'A', 'U'], [nt['G'], nt['C'], nt['A'], nt['U']], ax=ax)
+    sns.barplot(x=['G', 'C', 'A', 'U'], y=[nt['G'], nt['C'], nt['A'], nt['U']], ax=ax)
   else:
-    sns.barplot(['G', 'C', 'A', 'T'], [nt['G'], nt['C'], nt['A'], nt['T']], ax=ax)
+    sns.barplot(x=['G', 'C', 'A', 'T'], y=[nt['G'], nt['C'], nt['A'], nt['T']], ax=ax)
 
 
 def plot_length_binned(ax, df, num_bins = 1000):
@@ -117,7 +117,7 @@ def plot_length_binned(ax, df, num_bins = 1000):
   ax.set_xlabel("Lengths")
   ax.set_ylabel("Count (Log)")
   ax.hist(df.seq_length, num_bins)
-  ax.set_yscale('log', nonposy='clip')
+  ax.set_yscale('log', nonpositive='clip')
   xlabel_pos_right(ax)
   #sns.distplot(x, ax=ax, bins=num_bins, kde=False)
 
@@ -128,7 +128,7 @@ def plot_length_percentile(ax, df, percentile=90):
   ax.set_title("Histogram of Sequence Lengths from 0 to " + str(cutoff) + " (" + str(percentile) + "%ile) in " + str(num_bins) + " bins", loc="left")
   ax.set_xlabel("Length")
   ax.set_ylabel("Count (Log)")
-  ax.set_yscale('log', nonposy='clip')
+  ax.set_yscale('log', nonpositive='clip')
   xlabel_pos_right(ax)
   ax.hist(df.seq_length, num_bins, range=(0,cutoff))
 
@@ -186,7 +186,7 @@ def plot_quality_seqlength(ax,df):
   ax.set_xlabel("Mean Quality")
   ax.set_ylabel("Read Length Log10")
   xlabel_pos_right(ax)
-  ax.set_yscale('log', nonposy='clip')
+  ax.set_yscale('log', nonpositive='clip')
 
 
 def plot_time_seqlength(ax,df):
@@ -200,7 +200,7 @@ def plot_time_seqlength(ax,df):
   ax.set_xlabel("Time")
   ax.set_ylabel("Read Length Log10")
   xlabel_pos_right(ax)
-  ax.set_yscale('log', nonposy='clip')
+  ax.set_yscale('log', nonpositive='clip')
   ax.set_xlim(left=0, right=np.max(hours))
   xlabel_pos_right(ax)
 
