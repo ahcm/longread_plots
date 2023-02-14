@@ -18,7 +18,7 @@ import numpy as np
 import collections
 from pyfastq_reader import fastq_reader
 
-plt.style.use("seaborn-colorblind")
+plt.style.use("seaborn-v0_8-colorblind")
 
 matplotlib.rcParams['axes.titlesize']=13
 matplotlib.rcParams['axes.labelsize']=12
