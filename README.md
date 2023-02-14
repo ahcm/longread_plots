@@ -5,8 +5,15 @@ A collection of plots for long read sequencing FastQ files from devices like Oxf
 pip install --user --upgrade pandas seaborn
 ```
 
-Note that matplot lib >= 3.0.0 is needed.
+Note that matplot lib >= 3.0.0 is needed and 3.6.1 has a breaking bug (3.6.2 on are fine).
 Python >= 3.5 is therfore recommended, otherwise plots might be corrupted.
+
+# Speed up with lrdf
+
+The aggregation of the data in python is quite slow.
+Therefore I implemented it as a standalone rust implementation,
+which can be found here:
+https://github.com/ahcm/lrdf
 
 # Installation
 
