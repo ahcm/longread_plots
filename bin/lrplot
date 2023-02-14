@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 from __future__ import print_function
 disclaimer = """
-# Version 0.6.1 2019-08-16
-# This is work in progress.
+# Version 0.7.0 2023-02-14
 # -- Andy Hauser <Andreas.Hauser@LMU.de>
 """
 
@@ -411,9 +410,12 @@ for filename in sys.argv[1:]:
 
   basename = os.path.basename(filename)
 
-  df_filename = basename + ".df.tsv"
+  df_filename = basename + ".lrdf.tsv"
+  old_df_filename = basename + ".df.tsv"
   if os.path.isfile(df_filename): # read alreads computed dataframe
     df = pd.read_csv(df_filename, sep="\t", encoding='utf-8', parse_dates=[10] )
+  elif os.path.isfile(old_df_filename):
+    df = pd.read_csv(old_df_filename, sep="\t", encoding='utf-8', parse_dates=[10] )
   else:
     df = get_fastq_info(filename)
     df.to_csv(df_filename, sep='\t', encoding='utf-8', index=False)

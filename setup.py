@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='lrplots',
-    version='0.6.1',
+    version='0.7.0',
     author='Andy Hauser',
     author_email='Andreas.Hauser@LMU.de',
     license='LICENSE',
